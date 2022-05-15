@@ -14,7 +14,7 @@ let readStock = new Promise(function (resolve, reject) {
 });
 
 readStock.then((num) => {
-  return axios.get('https://www.twse.com.tw/exchangeReport/STOCK_DAY', {
+  return axios.get('https://www.twse.com.tw/exchangeReport/STOCK_DAY', {  
     params: {
       // 設定 query string
       response: 'json',
