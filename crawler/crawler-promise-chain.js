@@ -2,8 +2,8 @@
 const axios = require('axios');
 const fs = require('fs');
 
-let readStock = new Promise(function (resolve, reject) {
-    return fs.readFile('stock.txt', 'utf-8', (err, data) => {
+ new Promise(function (resolve, reject) {
+    fs.readFile('stock.txt', 'utf-8', (err, data) => {
         if (err) {
             // 錯誤了
             reject(err);
