@@ -13,6 +13,11 @@ let readStock = new Promise(function (resolve, reject) {
     });
 });
 
+// readStock.then((a)=>{
+//     console.log(a)
+// })
+
+
 async function main() {
     let num = await readStock
     axios.get('https://www.twse.com.tw/exchangeReport/STOCK_DAY', {  //<-老師!不好意思，問一下為何這邊可以省略return不會報錯(crawler-promise.js檔案沒有return印出來結果會是undefined)
@@ -22,8 +27,8 @@ async function main() {
             date: '20220301',
             stockNo: num,
         },
-    }).then((axios) => {
-        console.log(axios)
+    }).then((a) => {
+        console.log(a)
     })
 }
 main();
