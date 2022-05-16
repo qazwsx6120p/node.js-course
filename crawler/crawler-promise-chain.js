@@ -21,7 +21,7 @@ const fs = require('fs');
         },
     })
 }).then((response) => {
-    console.log(response);
+    console.log(response.data);
 })
 
 

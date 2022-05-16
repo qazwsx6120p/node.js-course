@@ -23,7 +23,7 @@ readStock.then((num) => {
     },
   })
 }).then((response) => {
-  console.log(response);
+  console.log(response.data);
 })
 
 

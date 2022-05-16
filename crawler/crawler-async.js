@@ -27,8 +27,8 @@ async function main() {
             date: '20220301',
             stockNo: num,
         },
-    }).then((a) => {
-        console.log(a)
+    }).then((response) => {
+        console.log(response.data);
     })
 }
 main();
