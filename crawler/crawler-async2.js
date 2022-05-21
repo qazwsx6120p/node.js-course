@@ -4,7 +4,7 @@ const fs = require('fs/promises');
 
 
 
-async function main() {
+(async function () {
   //讀取stock檔案
   let num = await fs.readFile("stock.txt", "utf-8");
   axios
@@ -17,7 +17,7 @@ async function main() {
       },
     })
     .then((response) => {
-      console.log(response.data);
+      console.log(response.data); 
     });
-}
-main();
+})();
+
