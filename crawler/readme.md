@@ -1,2 +1,2 @@
-How to install
+# How to install
 cp .env.example .env

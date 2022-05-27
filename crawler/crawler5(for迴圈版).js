@@ -1,5 +1,3 @@
-
-
 // mysql2 是一個第三方套件
 // npm i mysql2
 // 引用進來
@@ -27,31 +25,17 @@ require('dotenv').config();
   let [data, fields] = await connection.execute('SELECT * FROM stocks');
   console.log(data); //data是陣列資料
 
-  //用map將data數據轉成新的陣列
-  let mapResult = data.map(async (stock) => {
+  for (let i = 0; i < data.length; i++) {
     let response = await axios.get(
-      'https://www.twse.com.tw/exchangeReport/STOCK_DAY',
-      {
+      'https://www.twse.com.tw/exchangeReport/STOCK_DAY',{
         params: {
           // 設定 query string
           response: 'json',
           date: '20220301',
-          stockNo: stock.id,
+          stockNo: data[i].id,
         },
-      }
-    );
-    //async裡面return的回傳值都是promise(pending)
-    return response.data;
-  });
-
-  //mapResult會回傳一個promise的陣列，所以下方要用await去接
-  //[ Promise { <pending> }, Promise { <pending> }, Promise { <pending> } ]
-  console.log(mapResult);
-
-  // Promise.all() <-- Promise.all方法會將陣列中的值並行運算執行
-  let prixeResult = await Promise.all(mapResult);
-  console.log(prixeResult);
-  // console.log(mapResult);
-
+      });
+      console.log(response.data);
+  }
   connection.end();
 })();
