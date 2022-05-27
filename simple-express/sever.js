@@ -22,3 +22,5 @@ app.get('/about', (request, response, next) => {
 app.listen(3008, () => {
   console.log('Server start at 3007');
 });
+
+//npm i -g nodemon <--啟動server的套件
