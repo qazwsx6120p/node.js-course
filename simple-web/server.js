@@ -11,5 +11,5 @@ const server = http.createServer((request, response) => {
 });
 //接收server，聽3001 port
 server.listen(3001, () => {
-  console.log('Server running at port 3001');
+  console.log('Server running at port 3001')
 });
