@@ -1,18 +1,24 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+
+import { API_URL } from '../utils/config';
 
 // 1. 在 react，我們不處理 dom 物件
-// 2. 相反地，我們在 react 裡控制的是「狀態」
-// 也就是，在 react，我們只控制狀態，然後交給 react 去幫我們處理後續
-// 例如，我們乖乖地通知 react 有狀態要改變，react 收到後，
+// 2. 相反地，我們在 react 裡控制的是「狀態」state
+// => 在 react，我們只控制狀態，然後交給 react 去幫我們處理後續
+// 例如，我們乖乖地透過 setXXX 通知 react 有狀態要改變，react 收到後，
 // 就會去幫我們重新渲染畫面、執行「副作用」
 const StockDetails = () => {
   // 宣告一個由 react 控制的狀態，這個狀態名字叫做 data
-  const [data, setData] = useState([]);
+  let [data, setData] = useState([]);
   // 目前在第幾頁
-  const [page, setPage] = useState(1);
+  let [page, setPage] = useState(1);
   // 總筆數 1,2,3,4,5,6,...,12
-  const [lastPage, setLastPage] = useState(1);
+  let [lastPage, setLastPage] = useState(1);
+
+  // 從網址上把 :stockId 拿下來
+  const { stockId } = useParams();
 
   //data = ['a','b','c'] <-- 不行直接改！！！
   // 當 useEffect 的第二個參數是空陣列的時候
@@ -20,7 +26,7 @@ const StockDetails = () => {
   useEffect(() => {
     let getPrices = async () => {
       // http://localhost:3001/stocks/2330?page=1
-      let response = await axios.get('http://localhost:3001/stocks/2330', {
+      let response = await axios.get(`${API_URL}/stocks/${stockId}`, {
         params: {
           page: page,
         },
@@ -31,9 +37,18 @@ const StockDetails = () => {
       // lastPage = response.data.pagination.lastPage;
       // 一定要透過 setXXXX 去設定狀態才可以
       setLastPage(response.data.pagination.lastPage);
+      // setXXX 是一個非同步函式
+      console.log('just after setLastPage:', lastPage);
     };
     getPrices();
-  }, []);
+  }, [page]);
+  // 初始化的時候, page 會從沒有定義變成預設值 -> 會引發這個副作用
+  // 點擊頁碼，會透過 onClick 去設定 page  setPage(i) -> 會引發副作用
+  // (副作用都是在改變完成後才觸發)
+
+  useEffect(() => {
+    console.log('useEffect for lastPage:', lastPage);
+  }, [lastPage]);
 
   const getPages = () => {
     let pages = [];
@@ -54,6 +69,10 @@ const StockDetails = () => {
             textAlign: 'center',
           }}
           key={i}
+          onClick={(e) => {
+            // 管理好 page 這個狀態
+            setPage(i);
+          }}
         >
           {i}
         </li>
