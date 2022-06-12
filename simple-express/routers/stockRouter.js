@@ -7,9 +7,19 @@ const router = express.Router();
 
 const pool = require('../utils/db');
 
+router.use((req, res, next) => {
+  console.log('CCCCCCCC');
+  next();
+});
+
+let singleMiddleware = (req, res, next) => {
+  console.log('DDDDDDD');
+  next();
+};
+
 // RESTful API
 // 取得 stocks 的列表
-router.get('/', async (req, res, next) => {
+router.get('/', singleMiddleware, async (req, res, next) => {
   console.log('我是股票列表');
   let [data, fields] = await pool.execute('SELECT * FROM stocks');
   res.json(data);
