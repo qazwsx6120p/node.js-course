@@ -6,10 +6,6 @@ const app = express();
 
 const path = require('path');
 
-// 使用第三方開發的中間件 cors
-const cors = require('cors');
-app.use(cors());
-
 // 啟用 session
 // npm i express-session
 // express-session 預設是存在應用程式的記體體 (node server.js)
